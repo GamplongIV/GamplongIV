@@ -36,7 +36,7 @@ const SHEETS = {
     label: "Profil",
     icon: LayoutDashboard,
     fixed: true,
-    description: "Sambutan, sejarah, visi, dan misi kalurahan.",
+    description: "Sambutan, Sejarah, Visi, dan Misi Padukuhan.",
     fields: [{ key: "isi", label: "Isi", type: "textarea", full: true }],
     fixedKeyLabel: "Bagian",
   },
@@ -68,14 +68,14 @@ const SHEETS = {
     label: "Administrasi",
     icon: BarChart3,
     fixed: true,
-    description: "Statistik penduduk dan data administrasi kalurahan.",
+    description: "Statistik penduduk dan data administrasi padukuhan.",
     fields: [{ key: "isi", label: "Nilai", type: "text", required: true }],
     fixedKeyLabel: "Bagian",
   },
   potensi: {
     label: "Potensi",
     icon: Database,
-    description: "Potensi dan keunggulan Kalurahan Gamplong IV.",
+    description: "Potensi dan keunggulan Padukuhan Gamplong IV.",
     fields: [
       { key: "nama", label: "Nama potensi", type: "text", required: true },
       { key: "deskripsi", label: "Deskripsi", type: "textarea", full: true },
@@ -98,7 +98,7 @@ const SHEETS = {
   maps: {
     label: "Maps",
     icon: MapPinned,
-    description: "Lokasi hotspot dan titik penting di sekitar kalurahan.",
+    description: "Lokasi hotspot dan titik penting di sekitar padukuhan.",
     fields: [
       { key: "nama", label: "Nama lokasi", type: "text", required: true },
       { key: "latitude", label: "Latitude", type: "number", required: true },
@@ -144,7 +144,7 @@ const SHEETS = {
 };
 
 const GROUPS = [
-  { label: "Informasi Kalurahan", items: ["profil", "kepengurusan", "administrasi", "kontak"] },
+  { label: "Informasi Padukuhan", items: ["profil", "kepengurusan", "administrasi", "kontak"] },
   { label: "Konten Website", items: ["berita", "komunitas", "potensi", "galeri", "maps"] },
   { label: "Inventaris", items: ["nama_barang", "inventaris"] },
 ];
@@ -545,7 +545,7 @@ export default function AdminDashboard() {
             </button>
             <div>
               <div className="text-[11px] font-bold tracking-[0.22em] text-[#4E9A73]">PANEL ADMIN</div>
-              <div className="text-base font-extrabold">Kalurahan Gamplong IV</div>
+              <div className="text-base font-extrabold">Padukuhan Gamplong IV</div>
             </div>
           </div>
 

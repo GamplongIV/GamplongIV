@@ -14,7 +14,7 @@ const erte = [1, 2, 3, 4, 5, 6];
 
 function getImageUrl(namaBarang) {
   const name = String(namaBarang || "").toLowerCase().trim();
-  const knownImages = ["gelas", "piring", "soblok", "sendok", "meja", "kursi", "karpet"];
+  const knownImages = ["gelas", "piring", "soblok", "sendok", "meja", "kursi", "karpet", "speaker", "microphone", "kipas"];
   
   if (knownImages.includes(name)) {
     return `/${name}.svg`;
@@ -53,7 +53,7 @@ export default function Home() {
     }));
   };
 
-  const totalBarangKalurahan = useMemo(() => {
+  const totalBarangPadukuhan = useMemo(() => {
     const map = {};
     inventaris.forEach((item) => {
       const key = item.nama_barang?.trim();
@@ -98,20 +98,20 @@ export default function Home() {
           INVENTARIS BARANG
         </h2>
         <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3">
-          KALURAHAN GAMPLONG IV
+          PADUKUHAN GAMPLONG IV
         </h2>
         <p className="text-xs sm:text-sm max-w-3xl mx-auto px-2">
-          Kumpulan data inventaris barang-barang di Kalurahan Gamplong IV.
+          Kumpulan data inventaris barang-barang di Padukuhan Gamplong IV.
         </p>
       </div>
 
       <div className={`${YELLO_BG} h-2`} />
 
-      {/* SECTION TOTAL BARANG KALURAHAN */}
+      {/* SECTION TOTAL BARANG Padukuhan */}
       <section id="total" className={`py-8 sm:py-12 px-4 sm:px-6 ${HEADER_BG}`}>
         <div className="flex flex-col justify-center mb-6 sm:mb-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white">
-            TOTAL BARANG INVENTARIS KALURAHAN
+            TOTAL BARANG INVENTARIS PADUKUHAN
           </h2>
         </div>
 
@@ -121,13 +121,13 @@ export default function Home() {
               <Loader2 className="w-8 h-8 animate-spin mb-2" />
               <p className="text-sm font-semibold">Memuat data inventaris...</p>
             </div>
-          ) : totalBarangKalurahan.length === 0 ? (
+          ) : totalBarangPadukuhan.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               Belum ada data inventaris yang tersimpan.
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-              {totalBarangKalurahan.map((item, index) => (
+              {totalBarangPadukuhan.map((item, index) => (
                 <div
                   key={index}
                   className="bg-[#4E9A73] p-4 sm:p-6 rounded-2xl text-center flex flex-col items-center justify-center transition-all hover:shadow-lg"
@@ -143,7 +143,7 @@ export default function Home() {
                       <Package className="w-8 h-8" />
                     </div>
                   )}
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 uppercase">
                     {item.title}
                   </h3>
                   <p className="text-base sm:text-lg text-white font-medium">
@@ -223,7 +223,7 @@ export default function Home() {
                               <Package className="w-8 h-8" />
                             </div>
                           )}
-                          <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">
+                          <h3 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2 uppercase">
                             {item.title}
                           </h3>
                           <p className="text-base sm:text-lg text-white font-medium">

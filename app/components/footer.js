@@ -87,10 +87,10 @@ export default function Footer() {
              loading="lazy" decoding="async"/>
           </div>
 
-          {/* KONTAK KALURAHAN */}
+          {/* KONTAK PADUKUHAN */}
           <div className="order-3 md:order-3 text-center md:text-right flex flex-col items-center md:items-end">
             <h3 className="text-base sm:text-lg font-bold mb-3 sm:mb-4 uppercase tracking-wide">
-              Kontak Kalurahan
+              Kontak Padukuhan
             </h3>
             <p className="text-xs sm:text-sm mb-2 text-gray-100 max-w-xs md:max-w-none">
               Jl. Gamplong IV, Desa Sumberagung, Kec. Tempel, Kab. Sleman, Yogyakarta 55552

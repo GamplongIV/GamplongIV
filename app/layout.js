@@ -11,8 +11,8 @@ const poppins = Poppins({
 const MAIN_BG = "bg-white"; 
 
 export const metadata = {
-  title: "Kalurahan Gamplong IV",
-  description: "Website resmi Kalurahan Gamplong IV",
+  title: "Padukuhan Gamplong IV",
+  description: "Website resmi Padukuhan Gamplong IV",
 };
 
 

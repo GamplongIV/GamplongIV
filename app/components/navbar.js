@@ -16,9 +16,9 @@ const NAV_ITEMS = [
     name: "Profil",
     href: "/prifil",
     subItems: [
-      { name: "Sejarah Kalurahan", href: "/prifil" },
-      { name: "Visi Kalurahan", href: "/prifil#sejarah" },
-      { name: "Misi Kalurahan", href: "/prifil#visi" },
+      { name: "Sejarah Padukuhan", href: "/prifil" },
+      { name: "Visi Padukuhan", href: "/prifil#sejarah" },
+      { name: "Misi Padukuhan", href: "/prifil#visi" },
       { name: "Kepengurusan", href: "/prifil#misi" },
       { name: "Kelompok Masyarakat", href: "/prifil#kepengurusan" },
       { name: "Administrasi Penduduk", href: "/prifil#ormas" },
@@ -269,7 +269,7 @@ export default function Navbar() {
           <div className="absolute inset-0" onClick={closeModal} />
           <div className="relative w-full max-w-sm sm:max-w-md bg-white shadow-2xl rounded-2xl text-black border border-gray-100 p-5 sm:p-6 flex flex-col z-10 animate-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg sm:text-xl font-bold">KONTAK KALURAHAN</h2>
+              <h2 className="text-lg sm:text-xl font-bold">KONTAK PADUKUHAN</h2>
               <button
                 onClick={closeModal}
                 className="p-1 text-gray-400 hover:text-black hover:bg-gray-100 rounded-lg transition cursor-pointer"

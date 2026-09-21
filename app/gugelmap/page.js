@@ -95,12 +95,12 @@ export default function LocationsPage() {
           MAPS LOKASI
         </h2>
         <h2 className="text-xl sm:text-2xl md:text-3xl tracking-wide">
-          KALURAHAN GAMPLONG IV
+          PADUKUHAN GAMPLONG IV
         </h2>
       </div>
 
       <div className="max-w-5xl mx-auto px-4">
-        {/* SECTION UTAMA (EMBEDDED GOOGLE MAPS KALURAHAN) */}
+        {/* SECTION UTAMA (EMBEDDED GOOGLE MAPS Padukuhan) */}
         <section className={`${MAIN_BG} mb-10 sm:mb-16 rounded-2xl p-4 sm:p-8 md:p-12 shadow-lg`}>
           <div className={`aspect-video w-full rounded-xl overflow-hidden border-[6px] sm:border-[10px] ${YELLO_BORDER}`}>
             <iframe
@@ -130,10 +130,10 @@ export default function LocationsPage() {
             UMKM & HOTSPOT
           </h2>
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-white mb-2">
-            KALURAHAN GAMPLONG IV
+            PADUKUHAN GAMPLONG IV
           </h2>
           <p className="text-xs sm:text-sm text-center text-white max-w-3xl mx-auto mb-6 sm:mb-12 px-2">
-            Kumpulan UMKM dan Hotspot area sekitar Kalurahan Gamplong IV.
+            Kumpulan UMKM dan Hotspot area sekitar Padukuhan Gamplong IV.
           </p>
 
           <div className="bg-white rounded-2xl p-4 sm:p-8 md:p-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 shadow-lg">

@@ -43,7 +43,7 @@ const getImage = (item, idKey = "fotoid", urlKey = "fotourl", fallback = "/Shodi
 
 const defaultKetud = [
   {
-    title: "Kepala Kalurahan",
+    title: "Kepala Padukuhan",
     name: "Shodiqin",
     imageUrl: "/Shodiq.jpg"
   }
@@ -51,8 +51,8 @@ const defaultKetud = [
 
 const defaultPengur = [
   [
-    { title: "Sekretaris Kalurahan", name: "Nurul", imageUrl: "/Shodiq.jpg" },
-    { title: "Bendahara Kalurahan", name: "Siti", imageUrl: "/Shodiq.jpg" }
+    { title: "Sekretaris Padukuhan", name: "Nurul", imageUrl: "/Shodiq.jpg" },
+    { title: "Bendahara Padukuhan", name: "Siti", imageUrl: "/Shodiq.jpg" }
   ],
   [
     { title: "Ketua RT 01", name: "Fulan A", imageUrl: "/Shodiq.jpg" },
@@ -65,7 +65,7 @@ const defaultPenduduk = [];
 const defaultPotensi = [
   {
     title: "Masjid At Taubah",
-    description: "Masjid yang menjadi pusat kegiatan keagamaan di Kalurahan Gamplong IV.",
+    description: "Masjid yang menjadi pusat kegiatan keagamaan di Padukuhan Gamplong IV.",
     imageUrl: "/Shodiq.jpg",
     link: "https://goo.gl/maps/1a2b3c4d5e6f7g8h9"
   }
@@ -75,7 +75,7 @@ const defaultKelompokMasyarakat = [
   {
     id: "ternak-kambing",
     title: "KELOMPOK TERNAK KAMBING",
-    subtitle: "KALURAHAN GAMPLONG IV",
+    subtitle: "PADUKUHAN GAMPLONG IV",
     bgImage: "/Shodiq.jpg",
     items: [
       {
@@ -299,9 +299,9 @@ export default function Home() {
     return item?.isi || fallbackText;
   };
 
-  const sejarahText = getProfil("sejarah", "Loading Sejarah Kalurahan Gamplong IV...");
-  const visiText = getProfil("visi", "Loading Visi Kalurahan Gamplong IV...");
-  const misiText = getProfil("misi", "Loading Misi Kalurahan Gamplong IV...");
+  const sejarahText = getProfil("sejarah", "Loading Sejarah Padukuhan Gamplong IV...");
+  const visiText = getProfil("visi", "Loading Visi Padukuhan Gamplong IV...");
+  const misiText = getProfil("misi", "Loading Misi Padukuhan Gamplong IV...");
 
   const rawKepengurusan = dbData.kepengurusan || [];
   let ketud = defaultKetud;
@@ -310,12 +310,12 @@ export default function Home() {
   if (rawKepengurusan.length > 0) {
     const headIndex = rawKepengurusan.findIndex(item => {
       const jab = (item.jabatan || item.Jabatan || "").toLowerCase();
-      return jab.includes("kepala dusun") || jab.includes("kepala kalurahan") || jab.includes("dukuh");
+      return jab.includes("kepala dusun") || jab.includes("dukuh");
     });
 
     const head = headIndex !== -1 ? rawKepengurusan[headIndex] : rawKepengurusan[0];
     ketud = [{
-      title: head.jabatan || head.Jabatan || "Kepala Kalurahan",
+      title: head.jabatan || head.Jabatan,
       name: head.nama || head.Nama || "-",
       imageUrl: getImage(head, "fotoid", "fotourl")
     }];
@@ -343,7 +343,7 @@ export default function Home() {
     kelompokMasyarakat = rawKomunitas.map((item, idx) => ({
       id: item._row || `komunitas-${idx}`,
       title: item.nama ? item.nama.toUpperCase() : "KELOMPOK MASYARAKAT",
-      subtitle: "KALURAHAN GAMPLONG IV",
+      subtitle: "PADUKUHAN GAMPLONG IV",
       bgImage: getImage(item, "fotobid", "fotoburl"),
       items: [
         ...(item.deskripsi1 ? [{
@@ -407,11 +407,11 @@ export default function Home() {
   return (
     <div className={`min-h-screen ${MAIN_BG}`}>
 
-{/* SEJARAH KALURAHAN */}
+{/* SEJARAH PADUKUHAN */}
       <CollapsibleSection 
         title="SEJARAH"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Profil dan Sejarah Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Profil dan Sejarah Padukuhan Gamplong IV."
         bgColor={HEADER_BG}
         textColor="text-white"
         id="sejarah"
@@ -422,7 +422,7 @@ export default function Home() {
               <div className="relative w-48 h-48 md:w-auto md:h-100 overflow-hidden mx-auto">
                 <img 
                   src="/sejarah.jpg" 
-                  alt="Sejarah Kalurahan"
+                  alt="Sejarah Padukuhan"
                   className="w-full h-full object-cover"
                  loading="lazy" decoding="async"/>
               </div>
@@ -436,11 +436,11 @@ export default function Home() {
         </div>
       </CollapsibleSection>
 
-{/* VISI KALURAHAN */}
+{/* VISI PADUKUHAN */}
       <CollapsibleSection 
         title="VISI"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Visi Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Visi Padukuhan Gamplong IV."
         bgColor={MAIN_BG}
         textColor={HEADER_TEXT}
         id="visi"
@@ -448,7 +448,7 @@ export default function Home() {
         <div className="mx-auto">
           <div className={`grid grid-cols-1 md:bg-[#4E9A73] md:grid-cols-2 gap-6 md:pl-12 md:gap-8 items-center`}>
             <div className="col-span-1 flex flex-col justify-center order-2 md:order-1">
-              <p className={`text-xs md:text-sm text-center text-black md:text-end md:text-white leading-relaxed whitespace-pre-line px-5 md:px-0`}>
+              <p className={`text-xs md:text-xl text-bold text-center text-black md:text-end md:text-white leading-relaxed whitespace-pre-line px-5 md:px-0`}>
                 {visiText}
               </p>
             </div>
@@ -456,7 +456,7 @@ export default function Home() {
               <div className="relative w-48 h-48 md:w-auto md:h-100 overflow-hidden mx-auto">
                 <img 
                   src="/visi.jpg" 
-                  alt="Visi Kalurahan"
+                  alt="Visi Padukuhan"
                   className="w-full h-full object-cover"
                  loading="lazy" decoding="async"/>
               </div>
@@ -465,12 +465,12 @@ export default function Home() {
         </div>
       </CollapsibleSection>
 
-{/* MISI KALURAHAN */}
+{/* MISI PADUKUHAN */}
       <div className={`${YELLO_BG} h-2`}/>
       <CollapsibleSection 
         title="MISI"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Misi Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Misi Padukuhan Gamplong IV."
         bgColor={HEADER_BG}
         textColor="text-white"
         id="misi"
@@ -481,13 +481,13 @@ export default function Home() {
               <div className="relative w-48 h-48 md:w-auto md:h-100 overflow-hidden mx-auto">
                 <img 
                   src="/misi.jpg" 
-                  alt="Misi Kalurahan"
+                  alt="Misi Padukuhan"
                   className="w-full h-full object-cover"
                  loading="lazy" decoding="async"/>
               </div>
             </div>
             <div className="col-span-1 flex flex-col justify-center">
-              <p className="text-xs md:text-sm text-center md:text-left md:text-black leading-relaxed whitespace-pre-line px-5 md:px-0">
+              <p className="md:py-8 text-xs md:text-sm text-center md:text-left md:text-black leading-relaxed whitespace-pre-line px-5 md:px-0">
                 {misiText}
               </p>
             </div>
@@ -498,8 +498,8 @@ export default function Home() {
 {/* KEPENGURUSAN */}
       <CollapsibleSection 
         title="KEPENGURUSAN"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Kepengurusan Pemerintahan dan Pimpinan Kelompok Masyarakat Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Kepengurusan Pemerintahan dan Pimpinan Kelompok Masyarakat Padukuhan Gamplong IV."
         bgColor={MAIN_BG}
         textColor={HEADER_TEXT}
         id="kepengurusan"
@@ -507,14 +507,14 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
           <div className="relative flex flex-col items-center w-full">
             
-            {/* Kepala Kalurahan */}
+            {/* Kepala Padukuhan */}
             {ketud.map((person, index) => (
               <div key={index} className="relative z-20 mb-8 md:mb-12 w-full max-w-md mx-auto">
                 <PaldusCard {...person} />
               </div>
             ))}
 
-            {/* Pengurus Kalurahan & RT */}
+            {/* Pengurus Padukuhan & RT */}
             {pengur.map((row, rowIndex) => (
               <div key={rowIndex} className="relative z-10 w-full mb-6 md:mb-0">
                 <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-5xl mx-auto relative gap-6 md:gap-0">
@@ -555,8 +555,8 @@ export default function Home() {
       <div className={`${YELLO_BG} h-2`}/>
       <CollapsibleSection 
         title="KELOMPOK MASYARAKAT"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Sejarah, tujuan dan ragam kegiatan Kelompok Masyarakat di Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Sejarah, tujuan dan ragam kegiatan Kelompok Masyarakat di Padukuhan Gamplong IV."
         bgColor={HEADER_BG}
         textColor="text-white"
         id="ormas"
@@ -571,8 +571,8 @@ export default function Home() {
       {/* ADMINISTRASI */}
       <CollapsibleSection 
         title="ADMINISTRASI PENDUDUK"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Kumpulan data dan Statistik seputar Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Kumpulan data dan Statistik seputar Padukuhan Gamplong IV."
         bgColor={MAIN_BG}
         textColor={HEADER_TEXT}
         id="administrasi"
@@ -593,8 +593,8 @@ export default function Home() {
       <div className={`${YELLO_BG} h-2`}/>
       <CollapsibleSection 
         title="POTENSI DESA"
-        subtitle="KALURAHAN GAMPLONG IV"
-        description="Profil dan Lokasi Lingkungan dan Potensi Wisata yang ada di Kalurahan Gamplong IV."
+        subtitle="PADUKUHAN GAMPLONG IV"
+        description="Profil dan Lokasi Lingkungan dan Potensi Wisata yang ada di Padukuhan Gamplong IV."
         bgColor={HEADER_BG}
         textColor="text-white"
         id="potensi"

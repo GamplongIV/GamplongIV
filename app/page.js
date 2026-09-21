@@ -66,7 +66,7 @@ const defaultBerita = [
   {
     id: 2,
     category: "PENGUMUMAN",
-    title: "Pengumuman Kerja Bakti Kalurahan Gamplong IV",
+    title: "Pengumuman Kerja Bakti Padukuhan Gamplong IV",
     image: "/Shodiq.jpg",
     preview: "Diimbau kepada seluruh warga untuk mengikuti kerja bakti..."
   },
@@ -84,19 +84,19 @@ const defaultKomunitas = [
     id: 1,
     title: "KELOMPOK TERNAK KAMBING",
     image: "/Shodiq.jpg",
-    desc: "Organisasi dan wadah kegiatan peternak kambing di Kalurahan Gamplong IV."
+    desc: "Organisasi dan wadah kegiatan peternak kambing di Padukuhan Gamplong IV."
   },
   {
     id: 2,
     title: "KELOMPOK TANI",
     image: "/Shodiq.jpg",
-    desc: "Komunitas petani Kalurahan Gamplong IV dalam mengelola hasil bumi dan pertanian."
+    desc: "Komunitas petani Padukuhan Gamplong IV dalam mengelola hasil bumi dan pertanian."
   },
   {
     id: 3,
     title: "KELOMPOK PEMUDA",
     image: "/Shodiq.jpg",
-    desc: "Wadah kreativitas, gotong royong, dan kegiatan kepemudaan Kalurahan Gamplong IV."
+    desc: "Wadah kreativitas, gotong royong, dan kegiatan kepemudaan Padukuhan Gamplong IV."
   }
 ];
 
@@ -238,10 +238,10 @@ const HeroSlider = () => {
                     WEBSITE RESMI
                 </h2>
                 <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-[#E8B931] drop-shadow-md mb-3 uppercase tracking-wide">
-                    KALURAHAN GAMPLONG IV
+                    PADUKUHAN GAMPLONG IV
                 </h2>
                 <p className="text-xs md:text-sm text-white max-w-2xl drop-shadow px-2">
-                    Sumber informasi dan berita terbaru seputar Kalurahan Gamplong IV. 
+                    Sumber informasi dan berita terbaru seputar Padukuhan Gamplong IV. 
                 </p>
             </div>
 
@@ -308,7 +308,7 @@ export default function Home() {
         profilSambutan.isi || 
         profilSambutan.deskripsi || 
         profilSambutan.teks || 
-        "Selamat datang di website resmi Kalurahan Gamplong IV. Website ini hadir sebagai media komunikasi, transparansi informasi publik, serta sarana promosi potensi wilayah Kalurahan Gamplong IV kepada masyarakat luas.";
+        "Selamat datang di website resmi Padukuhan Gamplong IV. Website ini hadir sebagai media komunikasi, transparansi informasi publik, serta sarana promosi potensi wilayah Padukuhan Gamplong IV kepada masyarakat luas.";
 
     const rawBerita = dbData.berita || [];
     let processedBerita = defaultBerita;
@@ -346,7 +346,7 @@ export default function Home() {
             id: item._row || idx,
             title: (item.nama || "KELOMPOK MASYARAKAT").toUpperCase(),
             image: getImage(item, "fotobid", "fotoburl", "/Shodiq.jpg"),
-            desc: item.deskripsi1 || item.deskripsi2 || "Wadah kegiatan kemasyarakatan Kalurahan Gamplong IV."
+            desc: item.deskripsi1 || item.deskripsi2 || "Wadah kegiatan kemasyarakatan Padukuhan Gamplong IV."
         }));
     }
 
@@ -358,7 +358,7 @@ export default function Home() {
         processedInven = recentInven.map(item => ({
             title: item.nama_barang ,
             value: item.jumlah ,
-            imageUrl: item.nama_barang + ".svg"
+            imageUrl: item.nama_barang.toLowerCase + ".svg"
         }));
     }
 
@@ -376,7 +376,7 @@ export default function Home() {
     const rawKepengurusan = dbData.kepengurusan || [];
     const kadusData = rawKepengurusan.find(item => {
         const jab = (item.jabatan || item.Jabatan || "").toLowerCase();
-        return jab.includes("kepala dusun") || jab.includes("kepala kalurahan") || jab.includes("dukuh");
+        return jab.includes("kepala dusun") || jab.includes("dukuh");
     });
     const kadusNama = kadusData?.nama || kadusData?.Nama || "SHODIQIN";
     const kadusFoto = getImage(kadusData, "fotoid", "fotourl", "/Shodiq.jpg");
@@ -398,14 +398,14 @@ export default function Home() {
             
             <HeroSlider />
 
-            {/* SAMBUTAN KEPALA KALURAHAN */}
+            {/* SAMBUTAN KEPALA Padukuhan */}
             <section className={`px-4 ${MAIN_BG} mt-6 md:mt-10`}>
                 <div className={`${HEADER_TEXT} max-w-5xl mx-auto`}>
                     <h2 className="text-2xl md:text-3xl font-bold text-center mt-3 mb-1">
                         SAMBUTAN KATA
                     </h2>
                     <h2 className="text-3xl md:text-4xl font-bold text-center mb-5">
-                        KEPALA KALURAHAN GAMPLONG IV
+                        KEPALA PADUKUHAN GAMPLONG IV
                     </h2>
 
                     <div className={`${HEADER_BG} border-4 p-2 md:p-3 flex flex-col items-center justify-center rounded-3xl md:rounded-4xl mt-6 md:mt-10 max-w-md mx-auto`}>
@@ -413,13 +413,13 @@ export default function Home() {
                             <div className="relative w-44 h-44 sm:w-56 sm:h-56 md:w-72 md:h-72 overflow-hidden rounded-2xl mx-auto">
                                 <img 
                                     src={kadusFoto} 
-                                    alt="Kepala Kalurahan"
+                                    alt="Kepala Padukuhan"
                                     className="w-full h-full object-cover"
                                  loading="lazy" decoding="async"/>
                             </div>
                             <div className="text-center mt-3 md:mt-4">  
                                 <h3 className="text-lg md:text-xl font-bold text-black">{kadusNama}</h3>
-                                <p className="text-xs md:text-sm text-gray-600">Kepala Kalurahan</p>
+                                <p className="text-xs md:text-sm text-gray-600">Kepala Padukuhan</p>
                             </div>
                         </div>
                     </div>
@@ -440,10 +440,10 @@ export default function Home() {
                         BERITA TERKINI
                     </h2>
                     <h2 className="text-xl md:text-3xl font-bold mb-2">
-                        KALURAHAN GAMPLONG IV
+                        PADUKUHAN GAMPLONG IV
                     </h2>
                     <p className="text-xs md:text-sm max-w-3xl mx-auto mb-6 md:mb-12">
-                        Kumpulan berita terbaru seputar Kalurahan Gamplong IV, mulai dari kegiatan, pengumuman, hingga informasi penting lainnya.
+                        Kumpulan berita terbaru seputar Padukuhan Gamplong IV, mulai dari kegiatan, pengumuman, hingga informasi penting lainnya.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
@@ -497,17 +497,17 @@ export default function Home() {
                         ADMINISTRASI PENDUDUK
                     </h2>
                     <h2 className="text-xl md:text-3xl font-bold mb-2 px-4">
-                        KALURAHAN GAMPLONG IV
+                        PADUKUHAN GAMPLONG IV
                     </h2>
                     <p className="text-xs md:text-sm max-w-3xl mx-auto mb-6 md:mb-8 px-4">
-                        Informasi administrasi penduduk terkini seputar Kalurahan Gamplong IV.
+                        Informasi administrasi penduduk terkini seputar Padukuhan Gamplong IV.
                     </p>
 
                     <CollapsibleSection
                     id="infografis"
                     title="INFOGRAFIS"
-                    subtitle="KALURAHAN GAMPLONG IV"
-                    description="Infografis seputar Kalurahan Gamplong IV."
+                    subtitle="PADUKUHAN GAMPLONG IV"
+                    description="Infografis seputar Padukuhan Gamplong IV."
                     bgColor={HEADER_BG}
                     textColor="text-white"
                     defaultOpen={false}
@@ -551,10 +551,10 @@ export default function Home() {
                         MAPS DAN HOTSPOT AREA
                     </h2>
                     <h2 className="text-xl md:text-3xl font-bold mb-2">
-                        KALURAHAN GAMPLONG IV
+                        PADUKUHAN GAMPLONG IV
                     </h2>
                     <p className="text-xs md:text-sm max-w-3xl mx-auto mb-6 md:mb-12">
-                        Kumpulan peta dan hotspot area seputar Kalurahan Gamplong IV.
+                        Kumpulan peta dan hotspot area seputar Padukuhan Gamplong IV.
                     </p>
                     
                     <div className="bg-white rounded-2xl p-3 md:p-6 shadow-md mx-auto">
@@ -585,10 +585,10 @@ export default function Home() {
                         INVENTARIS DAN SARANA PRASARANA
                     </h2>
                     <h2 className="text-xl md:text-3xl font-bold mb-2">
-                        KALURAHAN GAMPLONG IV
+                        PADUKUHAN GAMPLONG IV
                     </h2>
                     <p className="text-xs md:text-sm max-w-3xl mx-auto mb-6 md:mb-8">
-                        Informasi inventaris dan sarana prasarana Kalurahan Gamplong IV.
+                        Informasi inventaris dan sarana prasarana Padukuhan Gamplong IV.
                     </p>
 
                     <div className="max-w-5xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-4xl shadow-sm md:shadow-none">
@@ -600,7 +600,7 @@ export default function Home() {
                                         alt={item.title}
                                         className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-xl object-contain"
                                      loading="lazy" decoding="async"/>
-                                    <h3 className="text-lg md:text-2xl font-bold text-white mb-1">{item.title}</h3>
+                                    <h3 className="text-lg md:text-2xl uppercase font-bold text-white mb-1">{item.title}</h3>
                                     <p className="text-base md:text-lg text-white font-medium">{item.value}</p>
                                 </div>
                             ))}
@@ -623,10 +623,10 @@ export default function Home() {
                         KELOMPOK DAN KOMUNITAS
                     </h2>
                     <h2 className="text-xl md:text-3xl font-bold mb-2">
-                        KALURAHAN GAMPLONG IV
+                        PADUKUHAN GAMPLONG IV
                     </h2>
                     <p className="text-xs md:text-sm max-w-3xl mx-auto mb-6 md:mb-12">
-                        Kumpulan kelompok dan komunitas warga di Kalurahan Gamplong IV.
+                        Kumpulan kelompok dan komunitas warga di Padukuhan Gamplong IV.
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

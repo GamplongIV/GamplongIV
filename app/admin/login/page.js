@@ -47,7 +47,7 @@ export default function AdminLogin() {
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold">PANEL ADMIN</h1>
-          <p className="text-sm">Kalurahan Gamplong IV</p>
+          <p className="text-sm">Padukuhan Gamplong IV</p>
         </div>
 
         {error && (
