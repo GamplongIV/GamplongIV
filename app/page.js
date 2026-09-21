@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { ChevronDown, Loader2 } from "lucide-react";
 import { getPublicSheets } from "./lib/public-data";
@@ -354,13 +354,25 @@ export default function Home() {
     let processedInven = defaultInven;
 
     if (rawInventaris.length > 0) {
-        const recentInven = [...rawInventaris].reverse().slice(0, 3);
-        processedInven = recentInven.map(item => ({
-            title: item.nama_barang ,
-            value: item.jumlah ,
-            imageUrl: item.nama_barang.toLowerCase + ".svg"
+        const combinedMap = rawInventaris.reduce((acc, item) => {
+            const name = item.nama_barang;
+            const qty = Number(item.jumlah) || 0;
+
+            if (!acc[name]) {
+                acc[name] = 0;
+            }
+            acc[name] += qty;
+
+            return acc;
+        }, {});
+
+        processedInven = Object.keys(combinedMap).slice(0,3).map(namaBarang => ({
+            title: namaBarang,
+            value: combinedMap[namaBarang],
+            imageUrl: namaBarang.toLowerCase() + ".svg" 
         }));
     }
+
 
     const rawAdministrasi = dbData.administrasi || [];
     let processedPenduduk = defaultPenduduk;
@@ -398,7 +410,7 @@ export default function Home() {
             
             <HeroSlider />
 
-            {/* SAMBUTAN KEPALA Padukuhan */}
+{/* SAMBUTAN KEPALA Padukuhan */}
             <section className={`px-4 ${MAIN_BG} mt-6 md:mt-10`}>
                 <div className={`${HEADER_TEXT} max-w-5xl mx-auto`}>
                     <h2 className="text-2xl md:text-3xl font-bold text-center mt-3 mb-1">
@@ -432,7 +444,7 @@ export default function Home() {
                 </div>
             </section>
            
-            {/* BERITA TERKINI */}
+{/* BERITA TERKINI */}
             <div className={`${YELLO_BG} h-2`}/>
             <section className={`py-8 md:py-12 px-4 ${HEADER_BG}`}>
                 <div className="max-w-5xl mx-auto text-white text-center">
@@ -490,7 +502,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* ADMINISTRASI PENDUDUK */}
+{/* ADMINISTRASI PENDUDUK */}
             <section className={`py-8 md:py-12 md:px-4 ${MAIN_BG}`}>
                 <div className={`md:max-w-5xl mx-auto ${HEADER_TEXT} text-center`}>
                     <h2 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2 px-4">
@@ -543,7 +555,7 @@ export default function Home() {
                 </div>
             </section>
             
-            {/* MAPS DAN HOTSPOT AREA */}
+{/* MAPS DAN HOTSPOT AREA */}
             <div className={`${YELLO_BG} h-2`}/>
             <section className={`py-8 md:py-12 px-4 ${HEADER_BG}`}>
                 <div className="max-w-5xl mx-auto text-white text-center">
@@ -578,7 +590,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* INVENTARIS DAN SARANA PRASARANA */}
+{/* INVENTARIS DAN SARANA PRASARANA */}
             <section className={`py-8 md:py-12 px-4 ${MAIN_BG}`}>
                 <div className={`max-w-5xl mx-auto ${HEADER_TEXT} text-center`}>
                     <h2 className="text-2xl md:text-4xl font-bold mb-1 md:mb-2">
@@ -593,15 +605,26 @@ export default function Home() {
 
                     <div className="max-w-5xl mx-auto bg-white p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-4xl shadow-sm md:shadow-none">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                            {displayedInven.map((item, index) => (
+                            {/* UBAH rawInventaris MENJADI processedInven */}
+                            {processedInven.map((item, index) => (
                                 <div key={index} className="bg-[#4E9A73] p-4 md:p-6 rounded-2xl text-center flex flex-col items-center justify-center">
                                     <img
                                         src={item.imageUrl} 
                                         alt={item.title}
                                         className="w-12 h-12 md:w-16 md:h-16 mb-2 rounded-xl object-contain"
-                                     loading="lazy" decoding="async"/>
-                                    <h3 className="text-lg md:text-2xl uppercase font-bold text-white mb-1">{item.title}</h3>
-                                    <p className="text-base md:text-lg text-white font-medium">{item.value}</p>
+                                        loading="lazy" 
+                                        decoding="async"
+                                        /* Opsional: Fallback jika file gambar .svg tidak ada di folder public */
+                                        onError={(e) => {
+                                            e.currentTarget.src = "/default-icon.svg"; 
+                                        }}
+                                    />
+                                    <h3 className="text-lg md:text-2xl uppercase font-bold text-white mb-1">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-base md:text-lg text-white font-medium">
+                                        {item.value} Units {/* atau sesuaikan kata porsi/unit/buah */}
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -615,7 +638,7 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* KELOMPOK DAN KOMUNITAS */}
+{/* KELOMPOK DAN KOMUNITAS */}
             <div className={`${YELLO_BG} h-2`}/>
             <section className={`py-8 md:py-12 px-4 ${HEADER_BG}`}>
                 <div className="max-w-5xl mx-auto text-white text-center">

@@ -156,7 +156,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* HEADER SECTION PER RT */}
+{/* HEADER SECTION PER RT */}
       <div id="rt" className={`${MAIN_BG} ${HEADER_TEXT} text-center py-8 sm:py-12 px-4`}>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
           INVENTARIS BARANG
@@ -166,7 +166,7 @@ export default function Home() {
         </h2>
       </div>
 
-      {/* LIST RT ACCORDION */}
+{/* LIST RT ACCORDION */}
       {erte.map((rt) => {
         const isOpen = !!openRT[rt];
         const rtFormatted = String(rt).padStart(2, "0");

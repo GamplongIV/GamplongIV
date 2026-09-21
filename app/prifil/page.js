@@ -475,24 +475,29 @@ export default function Home() {
         textColor="text-white"
         id="misi"
       >
-        <div className="mx-auto">
-          <div className="grid grid-cols-1 md:bg-white md:grid-cols-2 gap-6 md:pr-12 md:gap-8 items-center">
-            <div className="col-span-1">
-              <div className="relative w-48 h-48 md:w-auto md:h-100 overflow-hidden mx-auto">
-                <img 
-                  src="/misi.jpg" 
-                  alt="Misi Padukuhan"
-                  className="w-full h-full object-cover"
-                 loading="lazy" decoding="async"/>
-              </div>
-            </div>
-            <div className="col-span-1 flex flex-col justify-center">
-              <p className="md:py-8 text-xs md:text-sm text-center md:text-left md:text-black leading-relaxed whitespace-pre-line px-5 md:px-0">
-                {misiText}
-              </p>
+      <div className="mx-auto">
+        <div className="grid grid-cols-1 md:bg-white md:grid-cols-2 gap-6 md:pr-12 md:gap-8 items-stretch">
+          
+          <div className="col-span-1 flex justify-center items-center">
+            <div className="relative w-full h-48 md:h-full min-h-[300px] overflow-hidden mx-auto">
+              <img 
+                src="/misi.jpg" 
+                alt="Misi Padukuhan"
+                className="w-full h-full object-cover object-center"
+                loading="lazy" 
+                decoding="async"
+              />
             </div>
           </div>
+
+          <div className="col-span-1 flex flex-col justify-center">
+            <p className="md:py-8 text-xs md:text-sm text-center md:text-left md:text-black leading-relaxed whitespace-pre-line px-5 md:px-0">
+              {misiText}
+            </p>
+          </div>
+
         </div>
+      </div>
       </CollapsibleSection>
 
 {/* KEPENGURUSAN */}
