@@ -19,7 +19,7 @@ function getImageUrl(namaBarang) {
   if (knownImages.includes(name)) {
     return `/${name}.svg`;
   }
-  return null;
+  return `/barang.svg`;
 }
 
 export default function Home() {

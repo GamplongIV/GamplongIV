@@ -369,7 +369,7 @@ export default function Home() {
         processedInven = Object.keys(combinedMap).slice(0,3).map(namaBarang => ({
             title: namaBarang,
             value: combinedMap[namaBarang],
-            imageUrl: namaBarang.toLowerCase() + ".svg" 
+            imageUrl: namaBarang.toLowerCase() + ".svg" || "barang.svg"
         }));
     }
 
@@ -393,9 +393,8 @@ export default function Home() {
     const kadusNama = kadusData?.nama || kadusData?.Nama || "SHODIQIN";
     const kadusFoto = getImage(kadusData, "fotoid", "fotourl", "/Shodiq.jpg");
 
-    const displayedBerita = isDesktop ? processedBerita : processedBerita.slice(0, 1);
+    const displayedBerita = isDesktop ? processedBerita : processedBerita.slice(1, 2);
     const displayedPenduduk = isDesktop ? processedPenduduk : processedPenduduk.slice(0, 3);
-    const displayedInven = isDesktop ? processedInven : processedInven.slice(0, 3);
 
     if (loading) {
         return (
@@ -437,7 +436,7 @@ export default function Home() {
                     </div>
 
                     {rawProfil.length > 0 && (
-                        <p className="text-xs md:text-sm text-center text-gray-600 max-w-3xl mx-auto my-6 md:my-12 leading-relaxed">
+                        <p className="text-sm text-gray-700 text-center py-8 whitespace-pre-line">
                             {sambutanTeks}
                         </p>
                     )}
