@@ -469,13 +469,6 @@ export default function AdminDashboard() {
     }
   }
 
-  async function logoutAndViewWebsite() {
-    try {
-      await fetch("/api/admin/logout", { method: "POST" });
-    } finally {
-      router.push("/");
-    }
-  }
 
   const mainColumns = config.fixedKeyLabel
     ? [config.fixedKeyLabel.toLowerCase(), ...config.fields.map((field) => field.key)]
@@ -548,14 +541,15 @@ export default function AdminDashboard() {
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={logoutAndViewWebsite}
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl bg-[#E8B931] px-3 py-2 text-xs font-extrabold text-black hover:brightness-95 sm:px-4 sm:py-2.5"
             >
               Lihat Website
               <ArrowUpRight size={15} />
-            </button>
+            </a>
           </div>
         </div>
       </header>

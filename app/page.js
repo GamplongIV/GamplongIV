@@ -314,7 +314,7 @@ export default function Home() {
         const sortedBerita = [...rawBerita].reverse();
 
         const newestPengumumanIndex = sortedBerita.findIndex(b => 
-            (b.kategori || b.category || "").toLowerCase() === "pengumuman"
+            (b.kategori).toLowerCase() === "pengumuman"
         );
 
         let middleBerita = newestPengumumanIndex !== -1 ? sortedBerita[newestPengumumanIndex] : sortedBerita[0];
@@ -327,10 +327,10 @@ export default function Home() {
 
         processedBerita = newsList.map((item, idx) => ({
             id: item.id || item._row || idx,
-            category: (item.kategori || item.category || "BERITA").toUpperCase(),
-            title: item.judul || item.title || "-",
+            category: (item.kategori || "BERITA").toUpperCase(),
+            title: item.judul,
             image: getImage(item, "fotoid", "fotourl", "/Shodiq.jpg"),
-            preview: item.isi || item.deskripsi || item.preview || ""
+            preview: item.preview || ""
         }));
     }
 
@@ -384,8 +384,8 @@ export default function Home() {
 
     const rawKepengurusan = dbData.kepengurusan || [];
     const kadusData = rawKepengurusan.find(item => {
-        const jab = (item.jabatan || item.Jabatan || "").toLowerCase();
-        return jab.includes("kepala dusun") || jab.includes("dukuh");
+        const jab = (item.jabatan).toLowerCase();
+        return jab.includes("kepala dukuh") || jab.includes("dukuh");
     });
     const kadusNama = kadusData?.nama || "Pak Dukuh";
     const kadusFoto = getImage(kadusData, "fotoid", "fotourl", "/Shodiq.jpg");

@@ -30,7 +30,7 @@ const getImage = (item, idKey = "fotoid", urlKey = "fotourl", fallback = "/Shodi
     return `/api/image?id=${encodeURIComponent(fileId)}`;
   }
 
-  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()] || item.imageUrl || item.image || item.fotoUrl || "";
+  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()];
   if (rawUrl) {
     if (!rawUrl.includes("http") && !rawUrl.startsWith("/")) {
       return `/api/image?id=${encodeURIComponent(rawUrl)}`;
@@ -295,7 +295,7 @@ export default function Home() {
 
   const getProfil = (bagian, fallbackText) => {
     const list = dbData.profil || [];
-    const item = list.find(p => (p.bagian || p.Bagian || "").toLowerCase() === bagian.toLowerCase());
+    const item = list.find(p => (p.bagian).toLowerCase() === bagian.toLowerCase());
     return item?.isi || fallbackText;
   };
 
@@ -309,14 +309,14 @@ export default function Home() {
 
   if (rawKepengurusan.length > 0) {
     const headIndex = rawKepengurusan.findIndex(item => {
-      const jab = (item.jabatan || item.Jabatan || "").toLowerCase();
-      return jab.includes("kepala dusun") || jab.includes("dukuh");
+      const jab = (item.jabatan).toLowerCase();
+      return jab.includes("kepala dukuh") || jab.includes("dukuh");
     });
 
     const head = headIndex !== -1 ? rawKepengurusan[headIndex] : rawKepengurusan[0];
     ketud = [{
-      title: head.jabatan || head.Jabatan,
-      name: head.nama || head.Nama || "-",
+      title: head.jabatan,
+      name: head.nama,
       imageUrl: getImage(head, "fotoid", "fotourl")
     }];
 
@@ -324,8 +324,8 @@ export default function Home() {
 
     if (remaining.length > 0) {
       const formatted = remaining.map(item => ({
-        title: item.jabatan || item.Jabatan || "-",
-        name: item.nama || item.Nama || "-",
+        title: item.jabatan,
+        name: item.nama,
         imageUrl: getImage(item, "fotoid", "fotourl")
       }));
 
@@ -363,8 +363,8 @@ export default function Home() {
 
   if (rawAdministrasi.length > 0) {
     const formattedAdmin = rawAdministrasi.map(item => ({
-      title: item.bagian || item.Bagian || "-",
-      value: item.isi || "-",
+      title: item.bagian,
+      value: item.isi,
       imageUrl: getImage(item, "fotoid", "fotourl")
     }));
 
@@ -382,7 +382,6 @@ export default function Home() {
       title: item.nama || "-",
       description: item.deskripsi || "-",
       imageUrl: getImage(item, "fotoid", "fotourl"),
-      link: item.link || item.maps_url || "https://maps.google.com"
     }));
   }
 
