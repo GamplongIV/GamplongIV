@@ -17,17 +17,40 @@ const DEFAULT_CONTACTS = [
 
 const formatContactLink = (link = "", nama = "") => {
   const cleanLink = String(link).trim();
+  
+  // 1. Jika sudah berupa URL lengkap atau mailto
   if (cleanLink.startsWith("http://") || cleanLink.startsWith("https://") || cleanLink.startsWith("mailto:")) {
     return cleanLink;
   }
+  
   const text = (String(nama) + " " + cleanLink).toLowerCase();
-  if (text.includes("mail") || text.includes("email")) {
+  
+  // 2. Email
+  if (text.includes("email")) {
     return `mailto:${cleanLink}`;
   }
-  if (text.includes("wa") || text.includes("whatsapp") || /^\+?\d+$/.test(cleanLink)) {
+  
+  // 3. TikTok
+  if (text.includes("tiktok")) {
+    const handle = cleanLink.startsWith("@") ? cleanLink : `@${cleanLink}`;
+    return `https://tiktok.com/${handle}`;
+  }
+  
+  // 4. Instagram
+  if (cleanLink.startsWith("@")) {
+    return `https://instagram.com/${cleanLink.slice(1)}`;
+  }
+  if (text.includes("instagram")) {
+    return `https://instagram.com/${cleanLink.replace(/^@/, "")}`;
+  }
+  
+  // 5. WhatsApp
+  if (text.includes("whatsapp") || /^\+?\d+$/.test(cleanLink)) {
     const num = cleanLink.replace(/\D/g, "");
     return `https://wa.me/${num}`;
   }
+  
+  // 6. Default URL
   return `https://${cleanLink}`;
 };
 
@@ -93,7 +116,7 @@ export default function Footer() {
               Kontak Padukuhan
             </h3>
             <p className="text-xs sm:text-sm mb-2 text-gray-100 max-w-xs md:max-w-none">
-              Jl. Gamplong IV, Desa Sumberagung, Kec. Tempel, Kab. Sleman, Yogyakarta 55552
+              Gamplong IV, Sumberrahayu, Moyudan, Sleman, Daerah Istimewa Yogyakarta 55563
             </p>
 
             {displayContacts.map((item, idx) => {

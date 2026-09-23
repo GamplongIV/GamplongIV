@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import { notifyWebsiteDataChanged } from "../lib/data-change";
 import { invalidatePublicDataCache } from "../lib/public-data";
 import { getAdminSheets, setAdminSheetCache } from "../lib/admin-data";
+import { fetchJsonWithRetry } from "../lib/api-client";
 
 const GREEN = "#4E9A73";
 const YELLOW = "#E8B931";
@@ -278,14 +279,11 @@ export default function AdminDashboard() {
   const currentRows = filteredRows.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
   async function apiPost(payload) {
-    const res = await fetch("/api/admin/gas", {
+    return fetchJsonWithRetry("/api/admin/gas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
-    });
-    const json = await res.json();
-    if (!res.ok || json.success === false) throw new Error(json.message || "Gagal menyimpan data.");
-    return json;
+    }, { retries: 2, timeoutMs: 20000 });
   }
 
   function requiredSheetsForActiveSheet() {

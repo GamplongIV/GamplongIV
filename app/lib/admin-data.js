@@ -1,3 +1,5 @@
+import { fetchJsonWithRetry } from './api-client';
+
 const adminSheetCache = new Map();
 const adminPendingRequests = new Map();
 
@@ -23,16 +25,7 @@ export async function getAdminSheets(sheets, { force = false } = {}) {
     if (!request) {
       request = (async () => {
         const params = new URLSearchParams({ action: 'getSheets', sheets: missing.join(',') });
-        const response = await fetch(`/api/admin/gas?${params.toString()}`, { cache: 'no-store' });
-        const raw = await response.text();
-        let json;
-        try {
-          json = JSON.parse(raw);
-        } catch {
-          const preview = raw.replace(/\s+/g, ' ').slice(0, 220);
-          throw new Error(`Respons API bukan JSON (HTTP ${response.status}). ${preview}`);
-        }
-        if (!response.ok || json.success === false) throw new Error(json.message || 'Gagal mengambil data admin.');
+        const json = await fetchJsonWithRetry(`/api/admin/gas?${params.toString()}`, { method: 'GET' });
         const data = json.data || {};
         Object.entries(data).forEach(([sheet, rows]) => adminSheetCache.set(sheet, rows));
         return data;

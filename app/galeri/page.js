@@ -53,7 +53,7 @@ const getGaleriImage = (item) => {
     return `/api/image?id=${encodeURIComponent(item.fotoid)}`;
   }
   
-  const rawUrl = item.fotourl || item.fotoUrl || item.imageUrl || item.image || item.gambar || "";
+  const rawUrl = item.fotourl;
   
   if (rawUrl && !rawUrl.includes("http")) {
     return `/api/image?id=${encodeURIComponent(rawUrl)}`;
@@ -76,12 +76,12 @@ export default function GaleriPage() {
         if (Array.isArray(data.galeri)) {
           const formatted = data.galeri.map((item, index) => ({
             id: item._row || index + 1,
-            title: item.judul || item.Judul || "Dokumentasi Kegiatan",
-            date: item["tanggal upload"] || item.tanggal_upload || item.tanggal || item.Tanggal || "",
-            content: item.isi || item.Isi || item.deskripsi || "",
+            title: item.judul,
+            date: item["tanggal upload"],
+            content: item.isi,
             image: getGaleriImage(item),
-            category: item.kategori || "GALERI",
-          }));
+          }))
+          .reverse();
 
           setGaleriList(formatted);
         }

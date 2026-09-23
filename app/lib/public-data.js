@@ -1,3 +1,5 @@
+import { fetchJsonWithRetry } from './api-client';
+
 const sheetCache = new Map();
 const pendingRequests = new Map();
 
@@ -20,16 +22,7 @@ async function requestSheets(sheets) {
       action: 'getSheets',
       sheets: sheets.join(','),
     });
-    const response = await fetch(`/api/admin/gas?${params.toString()}`, { cache: 'no-store' });
-    const raw = await response.text();
-    let json;
-    try {
-      json = JSON.parse(raw);
-    } catch {
-      const preview = raw.replace(/\s+/g, ' ').slice(0, 220);
-      throw new Error(`Respons API bukan JSON (HTTP ${response.status}). ${preview}`);
-    }
-    if (!response.ok || json.success === false) throw new Error(json.message || 'Gagal mengambil data website.');
+    const json = await fetchJsonWithRetry(`/api/admin/gas?${params.toString()}`, { method: 'GET' });
     const data = json.data || {};
     Object.entries(data).forEach(([sheet, rows]) => sheetCache.set(sheet, rows));
     return data;

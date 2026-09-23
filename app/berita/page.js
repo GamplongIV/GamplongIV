@@ -58,7 +58,7 @@ const getImage = (item, idKey = "fotoid", urlKey = "fotourl", fallback = "/Shodi
     return `/api/image?id=${encodeURIComponent(fileId)}`;
   }
 
-  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()] || item.imageUrl || item.image || item.fotoUrl || "";
+  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()];
   if (rawUrl) {
     if (!rawUrl.includes("http") && !rawUrl.startsWith("/")) {
       return `/api/image?id=${encodeURIComponent(rawUrl)}`;
@@ -84,14 +84,14 @@ export default function BeritaPage() {
         if (Array.isArray(data.berita)) {
           const mappedArticles = data.berita.map((item, idx) => ({
             id: item._row || idx + 1,
-            category: (item.kategori || item.Kategori || "BERITA").trim().toUpperCase(),
-            title: item.judul || item.Judul || "",
+            category: (item.kategori).trim().toUpperCase(),
+            title: item.judul,
             image: getImage(item),
-            preview: item.preview || item.Preview || "",
-            content: item.isi || item.Isi || "",
-            date: item["tanggal upload"] || item.tanggal_upload,
-          }));
-
+            preview: item.preview,
+            content: item.isi,
+            date: item["tanggal upload"],
+          }))
+          .reverse();
           setNewsArticles(mappedArticles);
         }
       } catch (error) {

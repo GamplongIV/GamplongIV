@@ -20,7 +20,7 @@ const RoutingMap = dynamic(() => import("@/components/routingmaps"), {
 });
 
 const getIconByKategori = (kategori) => {
-  const kat = (kategori || "").toLowerCase();
+  const kat = (kategori).toLowerCase();
   if (kat.includes("rumah_dukuh")) return "/rumah_dukuh.svg";
   if (kat.includes("rumah_rt")) return "/rumah_rt.svg";
   if (kat.includes("rumah_rw")) return "/rumah_rw.svg";
@@ -50,13 +50,13 @@ export default function LocationsPage() {
           const mappedData = data.maps
             .map((item, idx) => {
               // Menangani variasi penamaan header latitude & longitude di Google Sheets
-              const rawLat = item.latitude || item.Latitude || item.lat || item.Lat;
-              const rawLng = item.longitude || item.Longitude || item.long || item.Long || item.lng || item.Lng;
+              const rawLat = item.latitude;
+              const rawLng = item.longitude;
 
               return {
                 id: item._row || idx + 1,
-                nama: item.nama || item.Nama || item.judul || "Lokasi Tanpa Nama",
-                kategori: item.kategori || item.Kategori || "Lainnya",
+                nama: item.nama,
+                kategori: item.kategori || "Lainnya",
                 lat: parseFloat(rawLat),
                 lng: parseFloat(rawLng),
               };

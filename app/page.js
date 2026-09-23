@@ -32,7 +32,7 @@ const getImage = (item, idKey = "fotoid", urlKey = "fotourl", fallback = "/Shodi
     return `/api/image?id=${encodeURIComponent(fileId)}`;
   }
 
-  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()] || item.imageUrl || item.image || item.fotoUrl || "";
+  const rawUrl = item[urlKey] || item[urlKey.toLowerCase()];
   if (rawUrl) {
     if (!rawUrl.includes("http") && !rawUrl.startsWith("/")) {
       return `/api/image?id=${encodeURIComponent(rawUrl)}`;
@@ -300,14 +300,11 @@ export default function Home() {
 
     const rawProfil = dbData.profil || [];
     const profilSambutan = rawProfil.find(item => 
-        (item.bagian || item.judul || "").toLowerCase().includes("sambutan")
+        (item.bagian).toLowerCase().includes("sambutan")
     ) || rawProfil[0] || {};
 
     const sambutanTeks = 
-        profilSambutan.sambutan || 
         profilSambutan.isi || 
-        profilSambutan.deskripsi || 
-        profilSambutan.teks || 
         "Selamat datang di website resmi Padukuhan Gamplong IV. Website ini hadir sebagai media komunikasi, transparansi informasi publik, serta sarana promosi potensi wilayah Padukuhan Gamplong IV kepada masyarakat luas.";
 
     const rawBerita = dbData.berita || [];
@@ -390,7 +387,7 @@ export default function Home() {
         const jab = (item.jabatan || item.Jabatan || "").toLowerCase();
         return jab.includes("kepala dusun") || jab.includes("dukuh");
     });
-    const kadusNama = kadusData?.nama || kadusData?.Nama || "SHODIQIN";
+    const kadusNama = kadusData?.nama || "Pak Dukuh";
     const kadusFoto = getImage(kadusData, "fotoid", "fotourl", "/Shodiq.jpg");
 
     const displayedBerita = isDesktop ? processedBerita : processedBerita.slice(1, 2);
@@ -494,7 +491,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex justify-center mt-8 md:mt-12"> 
-                        <Link href="/berutu" className="bg-white text-[#4E9A73] hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group">
+                        <Link href="berita" className="bg-white text-[#4E9A73] hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group">
                             SELENGKAPNYA
                         </Link>
                     </div>
@@ -547,7 +544,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex justify-center mt-6 md:mt-8 px-4"> 
-                        <Link href="/prifil" className={`${HEADER_BG} text-white hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group`}>
+                        <Link href="/profil" className={`${HEADER_BG} text-white hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group`}>
                             SELENGKAPNYA
                         </Link>
                     </div>
@@ -672,7 +669,7 @@ export default function Home() {
                     </div>
 
                     <div className="flex justify-center mt-8 md:mt-12"> 
-                        <Link href="/prifil" className="bg-white text-[#4E9A73] hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group">
+                        <Link href="/profil" className="bg-white text-[#4E9A73] hover:bg-[#E8B931] hover:text-white font-bold text-xs md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 flex items-center gap-2 cursor-pointer group">
                             SELENGKAPNYA
                         </Link>
                     </div>

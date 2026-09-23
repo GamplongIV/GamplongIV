@@ -14,18 +14,18 @@ const NAV_ITEMS = [
   { name: "Home", href: "/" },
   {
     name: "Profil",
-    href: "/prifil",
+    href: "/profil",
     subItems: [
-      { name: "Sejarah Padukuhan", href: "/prifil" },
-      { name: "Visi Padukuhan", href: "/prifil#sejarah" },
-      { name: "Misi Padukuhan", href: "/prifil#visi" },
-      { name: "Kepengurusan", href: "/prifil#misi" },
-      { name: "Kelompok Masyarakat", href: "/prifil#kepengurusan" },
-      { name: "Administrasi Penduduk", href: "/prifil#ormas" },
-      { name: "Potensi Desa", href: "/prifil#administrasi" },
+      { name: "Sejarah Padukuhan", href: "/profil" },
+      { name: "Visi Padukuhan", href: "/profil#sejarah" },
+      { name: "Misi Padukuhan", href: "/profol#visi" },
+      { name: "Kepengurusan", href: "/profil#misi" },
+      { name: "Kelompok Masyarakat", href: "/profil#kepengurusan" },
+      { name: "Administrasi Penduduk", href: "/profil#ormas" },
+      { name: "Potensi Desa", href: "/profil#administrasi" },
     ],
   },
-  { name: "Berita", href: "/berutu" },
+  { name: "Berita", href: "/berita" },
   { name: "Maps", href: "/gugelmap" },
   {
     name: "Inventaris",
@@ -40,7 +40,7 @@ const NAV_ITEMS = [
       { name: "RT 06", href: "/invensi#rt-05" },
     ],
   },
-  { name: "Galeri", href: "/galer" },
+  { name: "Galeri", href: "/galeri" },
   { name: "Kontak", isAction: true, actionType: "contact" },
 ];
 
@@ -54,25 +54,48 @@ const DEFAULT_SOCIAL_LINKS = [
 const getContactIcon = (bagian = "", link = "") => {
   const text = (String(bagian) + " " + String(link)).toLowerCase();
   if (text.includes("tiktok")) return "/tiktok.svg";
-  if (text.includes("wa") || text.includes("whatsapp")) return "/wa.svg";
-  if (text.includes("ig") || text.includes("instagram")) return "/ig.svg";
-  if (text.includes("mail") || text.includes("email")) return "/mail.svg";
+  if (text.includes("whatsapp")) return "/wa.svg";
+  if (text.includes("instagram")) return "/ig.svg";
+  if (text.includes("email")) return "/mail.svg";
   return "/wa.svg";
 };
 
 const formatContactLink = (link = "", bagian = "") => {
   const cleanLink = String(link).trim();
+  
+  // 1. Jika sudah berupa URL lengkap atau mailto
   if (cleanLink.startsWith("http://") || cleanLink.startsWith("https://") || cleanLink.startsWith("mailto:")) {
     return cleanLink;
   }
+  
   const text = (String(bagian) + " " + cleanLink).toLowerCase();
-  if (text.includes("mail") || text.includes("email")) {
+  
+  // 2. Email
+  if (text.includes("email")) {
     return `mailto:${cleanLink}`;
   }
-  if (text.includes("wa") || text.includes("whatsapp") || /^\+?\d+$/.test(cleanLink)) {
+  
+  // 3. TikTok
+  if (text.includes("tiktok")) {
+    const handle = cleanLink.startsWith("@") ? cleanLink : `@${cleanLink}`;
+    return `https://tiktok.com/${handle}`;
+  }
+  
+  // 4. Instagram
+  if (cleanLink.startsWith("@")) {
+    return `https://instagram.com/${cleanLink.slice(1)}`;
+  }
+  if (text.includes("instagram") || text.includes("ig")) {
+    return `https://instagram.com/${cleanLink.replace(/^@/, "")}`;
+  }
+  
+  // 5. WhatsApp
+  if (text.includes("whatsapp") || text.includes("wa") || /^\+?\d+$/.test(cleanLink)) {
     const num = cleanLink.replace(/\D/g, "");
     return `https://wa.me/${num}`;
   }
+  
+  // 6. Default URL
   return `https://${cleanLink}`;
 };
 
@@ -108,8 +131,8 @@ export default function Navbar() {
         
         if (Array.isArray(data.kontak) && data.kontak.length > 0) {
           const formatted = data.kontak.map((item) => ({
-            nama: item.bagian || item.Bagian || item.nama || item.platform || item.jenis || "Kontak",
-            link: item.link || item.url || item.value || item.isi || "",
+            nama: item.bagian,
+            link: item.isi,
           }));
           setContacts(formatted);
         } else {

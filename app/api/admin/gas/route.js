@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const maxDuration = 90;
+
 function getGasUrl() {
   return process.env.GAS_API_URL || process.env.NEXT_PUBLIC_GAS_API_URL;
 }
@@ -72,28 +76,75 @@ function validateGasUrl(gasUrl) {
 }
 
 async function fetchGas(url, options = {}) {
-  const response = await fetch(url.toString(), {
-    redirect: "follow",
-    cache: "no-store",
-    ...options,
-  });
-  const text = await response.text();
+  const maxAttempts = Number.isInteger(options.retries) ? options.retries + 1 : 3;
+  const timeoutMs = Number.isFinite(options.timeoutMs) ? options.timeoutMs : 20000;
+  const requestOptions = { ...options };
+  delete requestOptions.retries;
+  delete requestOptions.timeoutMs;
 
-  let payload;
-  try {
-    payload = parseGasText(text, response);
-  } catch (error) {
-    if (!response.ok) {
-      const wrapped = new Error(`${error.message} (HTTP ${response.status}).`);
-      wrapped.gasStatus = error.gasStatus;
-      wrapped.gasContentType = error.gasContentType;
-      wrapped.gasPreview = error.gasPreview;
-      throw wrapped;
+  let lastError = null;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const response = await fetch(url.toString(), {
+        redirect: "follow",
+        cache: "no-store",
+        signal: controller.signal,
+        ...requestOptions,
+      });
+      const text = await response.text();
+
+      let payload;
+      try {
+        payload = parseGasText(text, response);
+      } catch (error) {
+        error.retryable = true;
+        if (!response.ok) {
+          const wrapped = new Error(`${error.message} (HTTP ${response.status}).`);
+          wrapped.gasStatus = error.gasStatus;
+          wrapped.gasContentType = error.gasContentType;
+          wrapped.gasPreview = error.gasPreview;
+          wrapped.retryable = true;
+          throw wrapped;
+        }
+        throw error;
+      }
+
+      if (!response.ok) {
+        const error = new Error(`Google Apps Script mengembalikan HTTP ${response.status}.`);
+        error.gasStatus = response.status;
+        error.retryable = [408, 425, 429, 500, 502, 503, 504].includes(response.status);
+        throw error;
+      }
+
+      return { response, payload };
+    } catch (error) {
+      lastError = error;
+      const message = String(error?.message || "");
+      const status = Number(error?.gasStatus || 0);
+      const retryable = error?.retryable !== false && (
+        error?.name === "AbortError" ||
+        error?.name === "TimeoutError" ||
+        !status ||
+        [408, 425, 429, 500, 502, 503, 504].includes(status) ||
+        /bukan JSON|HTML|respons kosong|fetch failed|network/i.test(message)
+      );
+
+      if (!retryable || attempt === maxAttempts - 1) break;
+      await new Promise((resolve) => setTimeout(resolve, 600 * 2 ** attempt));
+    } finally {
+      clearTimeout(timer);
     }
-    throw error;
   }
 
-  return { response, payload };
+  if (lastError?.name === "AbortError" || lastError?.name === "TimeoutError") {
+    throw new Error("Google Apps Script tidak merespons dalam batas waktu. Coba lagi beberapa saat kemudian.");
+  }
+
+  throw lastError || new Error("Gagal terhubung ke Google Apps Script.");
 }
 
 export async function GET(request) {
@@ -105,8 +156,8 @@ export async function GET(request) {
       url.searchParams.set(key, value);
     });
 
-    const { response, payload } = await fetchGas(url, { method: "GET" });
-    return NextResponse.json(payload, { status: response.ok ? 200 : response.status });
+    const { response, payload } = await fetchGas(url, { method: "GET", retries: 2, timeoutMs: 20000 });
+    return NextResponse.json(payload, { status: response.ok ? 200 : response.status, headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     return jsonErrorResponse(error, "Gagal terhubung ke GAS.", error?.message === "Unauthorized" ? 401 : 502);
   }
@@ -132,13 +183,15 @@ export async function POST(request) {
 
     const { response, payload: result } = await fetchGas(url, {
       method: "POST",
+      retries: 2,
+      timeoutMs: 25000,
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
       },
       body: JSON.stringify(outgoing),
     });
 
-    return NextResponse.json(result, { status: response.ok ? 200 : response.status });
+    return NextResponse.json(result, { status: response.ok ? 200 : response.status, headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     const unauthorized = error?.message === "Unauthorized";
     return jsonErrorResponse(
