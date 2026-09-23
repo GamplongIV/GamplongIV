@@ -157,7 +157,7 @@ const HeroSlider = () => {
     useEffect(() => {
         const fetchBackgrounds = async () => {
             try {
-                const images = ["/1.jpg", "/2.jpg", "/3.jpg"];
+                const images = ["/1.webp", "/2.webp", "/3.webp"];
                 setBackgrounds(images);
             } catch (error) {
                 console.error("Error fetching background images:", error);

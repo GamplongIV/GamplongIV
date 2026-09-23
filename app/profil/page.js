@@ -420,7 +420,7 @@ export default function Home() {
           <div className="col-span-1 flex justify-center items-center">
             <div className="relative w-full h-48 md:h-full min-h-[300px] overflow-hidden mx-auto">
                 <img 
-                  src="/sejarah.jpg" 
+                  src="/sejarah.webp" 
                   alt="Sejarah Padukuhan"
                   className="w-full h-full object-cover object-center"
                   loading="lazy" 
@@ -455,7 +455,7 @@ export default function Home() {
             <div className="col-span-1 order-1 md:order-2">
               <div className="relative w-48 h-48 md:w-auto md:h-100 overflow-hidden mx-auto">
                 <img 
-                  src="/visi.jpg" 
+                  src="/visi.webp" 
                   alt="Visi Padukuhan"
                   className="w-full h-full object-cover"
                  loading="lazy" decoding="async"/>
@@ -481,7 +481,7 @@ export default function Home() {
           <div className="col-span-1 flex justify-center items-center">
             <div className="relative w-full h-48 md:h-full min-h-[300px] overflow-hidden mx-auto">
               <img 
-                src="/misi.jpg" 
+                src="/misi.webp" 
                 alt="Misi Padukuhan"
                 className="w-full h-full object-cover object-center"
                 loading="lazy" 
